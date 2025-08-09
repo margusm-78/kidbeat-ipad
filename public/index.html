@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#6366f1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="KidBeat" />
+  
+  <!-- iOS Splash Screens -->
+  <link rel="apple-touch-startup-image" href="/splash/launch-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+  <link rel="apple-touch-startup-image" href="/splash/launch-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+  <link rel="apple-touch-startup-image" href="/splash/launch-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+  <link rel="apple-touch-startup-image" href="/splash/launch-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+  <link rel="apple-touch-startup-image" href="/splash/launch-1536x2048.png" media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)" />
+  <link rel="apple-touch-startup-image" href="/splash/launch-1668x2224.png" media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)" />
+  <link rel="apple-touch-startup-image" href="/splash/launch-2048x2732.png" media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)" />
+
+  <!-- Icons -->
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+  <link rel="icon" type="image/png" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+  
+  <!-- SEO Meta Tags -->
+  <title>KidBeat - Drum Machine for iPad</title>
+  <meta name="description" content="Professional drum machine optimized for iPad and mobile devices. Create beats with touch-friendly interface and export to WAV." />
+  <meta name="keywords" content="drum machine, music, audio, iPad, mobile, PWA, beats" />
+  <meta name="author" content="KidBeat" />
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="KidBeat - Drum Machine for iPad" />
+  <meta property="og:description" content="Professional drum machine optimized for iPad and mobile devices" />
+  <meta property="og:image" content="/og-image.png" />
+  <meta property="og:url" content="https://yourusername.github.io/kidbeat-ipad/" />
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="KidBeat - Drum Machine for iPad" />
+  <meta name="twitter:description" content="Professional drum machine optimized for iPad and mobile devices" />
+  <meta name="twitter:image" content="/og-image.png" />
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="/src/main.jsx" as="script" type="module" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Critical CSS for loading state -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    #root {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Loading spinner */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: white;
+    }
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top: 4px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Hide loading when app loads */
+    .app-loaded .loading {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="loading">
+      <div class="spinner"></div>
+      <h2 style="margin: 0; font-weight: 600;">🥁 Loading KidBeat...</h2>
+      <p style="margin: 10px 0 0 0; opacity: 0.8; font-size: 14px;">Preparing your mobile studio</p>
+    </div>
+  </div>
+  
+  <script type="module" src="/src/main.jsx"></script>
+  
+  <!-- Add app loaded class when React loads -->
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      // Add app-loaded class after a brief delay to hide loading screen
+      setTimeout(() => {
+        document.body.classList.add('app-loaded');
+      }, 1000);
+    });
+    
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered: ', registration);
+          })
+          .catch((registrationError) => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+  </script>
+</body>
+</html>
